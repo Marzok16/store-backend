@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import view_add_product,product_by_id,category_list,product_reviews_list,price_range
 
 urlpatterns = [
@@ -7,4 +7,7 @@ urlpatterns = [
     path('categories/',category_list,name='category-list'),
     path('price-range/',price_range,name='price-range'),
     path('<int:product_id>/reviews/',product_reviews_list,name='product-reviews-list'),
+    
+    # Dashboard API endpoints
+    path('dashboard/', include('products.api.dashboard_urls')),
 ]
