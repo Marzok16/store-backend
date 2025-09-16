@@ -49,23 +49,32 @@ function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center group">
           <div className="flex items-center hover:scale-105 transition-all duration-300 relative">
-            <div className="bg-gradient-to-br from-orange-400 to-orange-600 p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
-              <img
-                src="/amazon.png"
-                alt="Amazon Clone"
-                className="h-8 w-auto object-contain brightness-0 invert"
-              />
+            <div className="bg-gradient-to-br from-blue-400 to-orange-600 p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
+             <div className="bg-gradient-to-br from-blue-400 to-white-600 p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
+  <img
+    src={`${import.meta.env.BASE_URL}amazon.jpg`}
+    alt="Qstly"
+    className="h-8 w-auto object-contain"
+    // Removed brightness-0 invert temporarily
+    onLoad={() => console.log('Image loaded successfully!')}
+    onError={(e) => {
+      console.error('Image failed to load:', e.target.src);
+      console.error('Current location:', window.location.href);
+    }}
+  />
+</div>
+
             </div>
             <div className="hidden sm:block ml-3">
-              <span className="text-xl font-bold text-white group-hover:text-orange-300 transition-colors duration-300 block leading-tight">
-                Amazon
+              <span className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors duration-300 block leading-tight">
+                Qstly
               </span>
-              <span className="text-xs text-gray-300 group-hover:text-orange-200 transition-colors duration-300 block leading-none">
-                Clone
+              <span className="text-xs text-gray-300 group-hover:text-blue-200 transition-colors duration-300 block leading-none">
+                قسطلي
               </span>
             </div>
             {/* Hover glow effect */}
-            <div className="absolute inset-0 bg-orange-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+            <div className="absolute inset-0 bg-blue-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
           </div>
         </Link>
 
@@ -170,6 +179,19 @@ function Navbar() {
                         </svg>
                         Contact Support
                       </Link>
+                      {/* Dashboard link for admin users */}
+                      {(user?.is_staff || user?.is_superuser) && (
+                        <Link
+                          to="/dashboard"
+                          className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 hover:text-orange-700 transition-all duration-300"
+                          onClick={() => setShowUserDropdown(false)}
+                        >
+                          <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                          </svg>
+                          Store Dashboard
+                        </Link>
+                      )}
                       <div className="border-t border-gray-200 my-2"></div>
                       <button
                         onClick={handleLogout}
@@ -200,20 +222,34 @@ function Navbar() {
 
               {/* Admin Panel Button - Only show for admin users */}
               {(user?.is_staff || user?.is_superuser) && (
-                <a
-                  href="http://localhost:8000/admin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm hover:text-orange-300 transition-all duration-300 group relative hidden lg:block"
-                  title="Admin Panel"
-                >
-                  <div className="text-left">
-                    <p className="text-gray-300 group-hover:text-orange-200 transition-colors duration-300 text-xs">Admin</p>
-                    <p className="font-bold text-white group-hover:text-orange-300 transition-colors duration-300">Panel</p>
-                  </div>
-                  {/* Hover glow effect */}
-                  <div className="absolute inset-0 bg-orange-400/10 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                </a>
+                <>
+                  <Link
+                    to="/dashboard"
+                    className="text-sm hover:text-orange-300 transition-all duration-300 group relative hidden lg:block"
+                    title="Dashboard"
+                  >
+                    <div className="text-left">
+                      <p className="text-gray-300 group-hover:text-orange-200 transition-colors duration-300 text-xs">Store</p>
+                      <p className="font-bold text-white group-hover:text-orange-300 transition-colors duration-300">Dashboard</p>
+                    </div>
+                    {/* Hover glow effect */}
+                    <div className="absolute inset-0 bg-orange-400/10 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                  </Link>
+                  <a
+                    href="http://localhost:8000/admin/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm hover:text-orange-300 transition-all duration-300 group relative hidden lg:block"
+                    title="Admin Panel"
+                  >
+                    <div className="text-left">
+                      <p className="text-gray-300 group-hover:text-orange-200 transition-colors duration-300 text-xs">Admin</p>
+                      <p className="font-bold text-white group-hover:text-orange-300 transition-colors duration-300">Panel</p>
+                    </div>
+                    {/* Hover glow effect */}
+                    <div className="absolute inset-0 bg-orange-400/10 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                  </a>
+                </>
               )}
 
               <Link to="/cart" className="relative group">

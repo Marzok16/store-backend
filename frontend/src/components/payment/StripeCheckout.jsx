@@ -64,10 +64,13 @@ const PaymentForm = ({ order, onSuccess, onError }) => {
         if (error.response?.status === 401) {
           setError('Please log in to continue with payment');
         } else {
-          const errorMessage = error.response?.data?.error || error.message || 'Failed to initialize payment';
-          setError(errorMessage);
+          // Don't show error immediately - let user try to pay first
+          console.log('Payment initialization failed, but not showing error to user yet');
+          // const errorMessage = error.response?.data?.error || error.message || 'Failed to initialize payment';
+          // setError(errorMessage);
         }
-        onError && onError(error);
+        // Don't call onError immediately to prevent alert popup
+        // onError && onError(error);
       }
     };
 
@@ -76,7 +79,9 @@ const PaymentForm = ({ order, onSuccess, onError }) => {
       setInitializing(true);
       createPaymentIntent().finally(() => setInitializing(false));
     } else if (!order?.total_amount || order.total_amount <= 0) {
-      setError('Invalid order amount');
+      // Don't show error immediately - just log it
+      console.log('Invalid order amount, but not showing error to user');
+      // setError('Invalid order amount');
     }
   }, [order, clientSecret, initializing]); // Removed loading from dependencies to prevent loops
 
@@ -84,6 +89,13 @@ const PaymentForm = ({ order, onSuccess, onError }) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
+      setError('Payment system not ready. Please try again.');
+      return;
+    }
+
+    // Check if we have a client secret before proceeding
+    if (!clientSecret) {
+      setError('Payment not initialized. Please refresh the page and try again.');
       return;
     }
 

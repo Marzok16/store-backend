@@ -237,7 +237,8 @@ const CheckoutPage = () => {
 
   const handleStripeError = (error) => {
     console.error('Payment failed:', error);
-    alert('Payment failed. Please try again.');
+    // Don't show alert immediately - let the Stripe component handle the error display
+    // alert('Payment failed. Please try again.');
   };
 
   const validateShippingForm = () => {

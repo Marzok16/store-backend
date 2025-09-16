@@ -284,3 +284,5 @@ The dashboard API is designed to work seamlessly with React frontend application
 - Input validation on all endpoints
 - File upload restrictions (images only)
 - SQL injection protection through Django ORM
+
+

@@ -14,14 +14,21 @@ const DealsSection = () => {
         setIsLoading(true);
         // Fetch products and simulate deals (in a real app, you'd have a deals API)
         const response = await getProducts(1, null, null, null, 100, null, null); // Products under $100
-        const dealsData = response.data.results.slice(0, 6).map(product => ({
-          ...product,
-          originalPrice: (parseFloat(product.unit_price) * 1.2).toFixed(2), // Simulate original price
-          discountPercent: Math.floor(Math.random() * 30) + 10 // Random discount 10-40%
-        }));
-        setDeals(dealsData);
+        const results = response.data?.results;
+        if (Array.isArray(results)) {
+          const dealsData = results.slice(0, 6).map(product => ({
+            ...product,
+            originalPrice: (parseFloat(product.unit_price) * 1.2).toFixed(2), // Simulate original price
+            discountPercent: Math.floor(Math.random() * 30) + 10 // Random discount 10-40%
+          }));
+          setDeals(dealsData);
+        } else {
+          console.error('Deals response is not an array:', results);
+          setDeals([]);
+        }
       } catch (error) {
         console.error('Failed to fetch deals:', error);
+        setDeals([]);
       } finally {
         setIsLoading(false);
       }

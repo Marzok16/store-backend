@@ -60,3 +60,5 @@ def list_users(request):
     users = User.objects.all().order_by('-date_joined')
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+

@@ -13,9 +13,16 @@ const FeaturedProducts = ({ title = "Featured Products", categoryId = null, limi
       try {
         setIsLoading(true);
         const response = await getProducts(1, categoryId, null, null, null, 4, null); // Get high-rated products
-        setProducts(response.data.results.slice(0, limit));
+        const results = response.data?.results;
+        if (Array.isArray(results)) {
+          setProducts(results.slice(0, limit));
+        } else {
+          console.error('Featured products response is not an array:', results);
+          setProducts([]);
+        }
       } catch (error) {
         console.error('Failed to fetch featured products:', error);
+        setProducts([]);
       } finally {
         setIsLoading(false);
       }

@@ -151,3 +151,5 @@ class BulkUpdateSerializer(serializers.Serializer):
                 raise serializers.ValidationError("Category does not exist")
         
         return value
+
+

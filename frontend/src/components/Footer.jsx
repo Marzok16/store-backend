@@ -23,7 +23,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/404" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm">
-                  About Amazon Clone
+                  About qstly
                 </Link>
               </li>
               <li>
@@ -50,7 +50,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/404" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm">
-                  Sell on Amazon Clone
+                  Sell on Qstly Clone
                 </Link>
               </li>
               <li>
@@ -65,7 +65,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/404" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm">
-                  Host an Amazon Hub
+                  Host an Qstly Hub
                 </Link>
               </li>
             </ul>
@@ -77,17 +77,17 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/404" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm">
-                  Amazon Clone Rewards Visa
+                  Qsttly Clone Rewards Visa
                 </Link>
               </li>
               <li>
                 <Link to="/404" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm">
-                  Amazon Clone Store Card
+                 Qstly Store Card
                 </Link>
               </li>
               <li>
                 <Link to="/404" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm">
-                  Amazon Clone Business Card
+                  Qstly Business Card
                 </Link>
               </li>
               <li>
@@ -134,12 +134,20 @@ const Footer = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img
-                src="/amazon.png"
-                alt="Amazon Clone"
-                className="h-10 object-contain brightness-0 invert mr-2"
-              />
-              <span className="text-xl font-bold text-white">Amazon Clone</span>
+             <div className="bg-gradient-to-br from-orange-400 to-orange-600 p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
+  <img
+    src={`${import.meta.env.BASE_URL}amazon.jpg`}
+    alt="Qstly"
+    className="h-8 w-auto object-contain"
+    // Removed brightness-0 invert temporarily
+    onLoad={() => console.log('Image loaded successfully!')}
+    onError={(e) => {
+      console.error('Image failed to load:', e.target.src);
+      console.error('Current location:', window.location.href);
+    }}
+  />
+</div>
+              <span className="text-xl font-bold text-white">Qstly</span>
             </Link>
           </div>
 

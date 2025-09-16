@@ -59,14 +59,22 @@ function Signup() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl shadow-xl mb-4">
-            <img
-              src="/amazon.png"
-              alt="Amazon Clone"
-              className="h-10 w-auto object-contain brightness-0 invert"
-            />
+           <div className="bg-gradient-to-br from-orange-400 to-white-600 p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
+  <img
+    src="/amazon.jpg"
+    alt="Qstly"
+    className="h-8 w-auto object-contain"
+    // Removed brightness-0 invert temporarily
+    onLoad={() => console.log('Image loaded successfully!')}
+    onError={(e) => {
+      console.error('Image failed to load:', e.target.src);
+      console.error('Current location:', window.location.href);
+    }}
+  />
+</div>
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-            Join Amazon Clone
+            Join Qstly Store
           </h1>
           <p className="text-gray-600 mt-2">Create your account and start shopping</p>
         </div>

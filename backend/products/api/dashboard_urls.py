@@ -19,3 +19,5 @@ urlpatterns = [
     path('reviews/', dashboard_views.dashboard_reviews, name='dashboard-reviews'),
     path('reviews/<int:review_id>/delete/', dashboard_views.delete_review, name='delete-review'),
 ]
+
+

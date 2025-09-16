@@ -46,9 +46,16 @@ function Home() {
       try {
         const categoriesResponse = await getCategories();
         const categoriesData = categoriesResponse.data;
-        setCategories(categoriesData);
+        // Ensure categoriesData is an array
+        if (Array.isArray(categoriesData)) {
+          setCategories(categoriesData);
+        } else {
+          console.error('Categories response is not an array:', categoriesData);
+          setCategories([]);
+        }
       } catch (error) {
         console.error('Failed to load categories:', error);
+        setCategories([]);
       }
     };
 
@@ -64,10 +71,19 @@ function Home() {
           
           // Categories are already loaded, just fetch sample products for each category
           const categoryProductsData = {};
-          for (const category of categories.slice(0, 6)) { // Limit to 6 categories
+          // Ensure categories is an array before calling slice
+          const categoriesToProcess = Array.isArray(categories) ? categories.slice(0, 6) : [];
+          for (const category of categoriesToProcess) { // Limit to 6 categories
             try {
               const productsResponse = await getProducts(1, category.id, null, null, null, null, null);
-              categoryProductsData[category.id] = productsResponse.data.results.slice(0, 4);
+              // Ensure results is an array before calling slice
+              const results = productsResponse.data?.results;
+              if (Array.isArray(results)) {
+                categoryProductsData[category.id] = results.slice(0, 4);
+              } else {
+                console.error(`Products response for category ${category.id} is not an array:`, results);
+                categoryProductsData[category.id] = [];
+              }
             } catch (error) {
               console.error(`Failed to fetch products for category ${category.id}:`, error);
               categoryProductsData[category.id] = [];
@@ -105,11 +121,18 @@ function Home() {
             sortByParam
           );
           
-          setProducts(response.data.results);
-          setTotalCount(response.data.count);
+          // Ensure results is an array
+          const results = response.data?.results;
+          if (Array.isArray(results)) {
+            setProducts(results);
+          } else {
+            console.error('Products response is not an array:', results);
+            setProducts([]);
+          }
+          setTotalCount(response.data?.count || 0);
           
           // Set category name for display
-          if (categoryParam && categories.length > 0) {
+          if (categoryParam && Array.isArray(categories) && categories.length > 0) {
             const category = categories.find(cat => cat.id === parseInt(categoryParam));
             setSelectedCategoryName(category ? category.name : '');
           }
@@ -563,7 +586,7 @@ function Home() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.slice(0, 6).map((category) => (
+            {Array.isArray(categories) && categories.slice(0, 6).map((category) => (
               <CategoryBlock
                 key={category.id}
                 category={category}
@@ -574,7 +597,7 @@ function Home() {
         )}
 
         {/* More Featured Products by Category */}
-        {categories.slice(0, 3).map((category) => (
+        {Array.isArray(categories) && categories.slice(0, 3).map((category) => (
           <FeaturedProducts
             key={`featured-${category.id}`}
             title={`🏆 Best in ${category.name}`}

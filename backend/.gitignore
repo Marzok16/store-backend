@@ -1,0 +1,6 @@
+django-env/
+*.pyc
+__pycache__/*.pyc
+migrations/
+backend/media_root
+.env

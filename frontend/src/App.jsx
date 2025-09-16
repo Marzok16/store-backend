@@ -29,6 +29,15 @@ const PaymentPage = lazy(() => import("./pages/PaymentPage"));
 const PaymentSuccessPage = lazy(() => import("./pages/PaymentSuccessPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
+// Dashboard components
+const DashboardOverview = lazy(() => import("./pages/dashboard/DashboardOverview"));
+const ProductsPage = lazy(() => import("./pages/dashboard/ProductsPage"));
+const CategoriesPage = lazy(() => import("./pages/dashboard/CategoriesPage"));
+const ReviewsPage = lazy(() => import("./pages/dashboard/ReviewsPage"));
+const UsersPage = lazy(() => import("./pages/dashboard/UsersPage"));
+const DashboardLayout = lazy(() => import("./components/dashboard/DashboardLayout"));
+const AdminProtectedRoute = lazy(() => import("./components/AdminProtectedRoute"));
+
 function App() {
   return (
     <BrowserRouter>
@@ -114,6 +123,59 @@ function App() {
                   <Route path="/track" element={<OrderTracking />} />
                   <Route path="/track/:orderNumber" element={<OrderTracking />} />
                   <Route path="/contact" element={<Contact />} />
+                  
+                  {/* Dashboard Routes */}
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <AdminProtectedRoute>
+                        <DashboardLayout>
+                          <DashboardOverview />
+                        </DashboardLayout>
+                      </AdminProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/products"
+                    element={
+                      <AdminProtectedRoute>
+                        <DashboardLayout>
+                          <ProductsPage />
+                        </DashboardLayout>
+                      </AdminProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/categories"
+                    element={
+                      <AdminProtectedRoute>
+                        <DashboardLayout>
+                          <CategoriesPage />
+                        </DashboardLayout>
+                      </AdminProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/reviews"
+                    element={
+                      <AdminProtectedRoute>
+                        <DashboardLayout>
+                          <ReviewsPage />
+                        </DashboardLayout>
+                      </AdminProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/users"
+                    element={
+                      <AdminProtectedRoute>
+                        <DashboardLayout>
+                          <UsersPage />
+                        </DashboardLayout>
+                      </AdminProtectedRoute>
+                    }
+                  />
+                  
                   {/* 404 page route */}
                   <Route path="/404" element={<NotFound />} />
                   {/* Catch-all route for 404 */}
