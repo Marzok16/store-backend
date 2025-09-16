@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import media_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +29,8 @@ urlpatterns = [
     path('api/', include('orders.urls')),
     path('api/', include('contact.urls')),
     path('api/payments/', include('payments.urls')),
+    # Custom media serving with CORS headers
+    path('media/<path:path>', media_views.serve_media_with_cors, name='media_with_cors'),
 ]
 
 if settings.DEBUG:

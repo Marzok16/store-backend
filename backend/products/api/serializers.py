@@ -47,7 +47,12 @@ class ProductSerializer(serializers.ModelSerializer):
         if instance.image:
             request = self.context.get('request')
             if request:
+                # Use the request's host to build the absolute URI
+                # This ensures the URL works with ngrok and other tunnel services
                 representation['image'] = request.build_absolute_uri(instance.image.url)
+            else:
+                # Fallback to relative URL if no request context
+                representation['image'] = instance.image.url
         
         return representation
 

@@ -55,6 +55,9 @@ function Home() {
         }
       } catch (error) {
         console.error('Failed to load categories:', error);
+        if (error.message === 'ngrok-warning-page') {
+          console.warn('Ngrok warning page detected. Please visit the ngrok URL directly first to bypass the warning.');
+        }
         setCategories([]);
       }
     };

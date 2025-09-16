@@ -22,6 +22,9 @@ const FeaturedProducts = ({ title = "Featured Products", categoryId = null, limi
         }
       } catch (error) {
         console.error('Failed to fetch featured products:', error);
+        if (error.message === 'ngrok-warning-page') {
+          console.warn('Ngrok warning page detected. Please visit the ngrok URL directly first to bypass the warning.');
+        }
         setProducts([]);
       } finally {
         setIsLoading(false);

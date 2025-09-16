@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "d1b4b7e3a561.ngrok-free.app",
     "0a454e7b366c.ngrok-free.app",
+    "99e4adbd0611.ngrok-free.app",
 ]
 
 # Dynamically allow any ngrok subdomain in development
@@ -163,6 +164,20 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOW_HEADERS = [
     "accept", "accept-encoding", "authorization", "content-type",
     "dnt", "origin", "user-agent", "x-csrftoken", "x-requested-with",
+    "ngrok-skip-browser-warning",
+]
+
+# Allow media files to be accessed from any origin
+CORS_URLS_REGEX = r'^/(api|media)/.*$'
+
+# Add CORS headers to media files
+CORS_EXPOSE_HEADERS = [
+    "content-type",
+    "content-length",
+    "cache-control",
+    "expires",
+    "last-modified",
+    "etag",
 ]
 
 # --- JWT ---

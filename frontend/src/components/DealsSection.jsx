@@ -28,6 +28,9 @@ const DealsSection = () => {
         }
       } catch (error) {
         console.error('Failed to fetch deals:', error);
+        if (error.message === 'ngrok-warning-page') {
+          console.warn('Ngrok warning page detected. Please visit the ngrok URL directly first to bypass the warning.');
+        }
         setDeals([]);
       } finally {
         setIsLoading(false);

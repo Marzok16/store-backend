@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 """
 Simple test script for dashboard API endpoints
 Run this after starting the Django server to test the dashboard API
@@ -91,3 +91,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

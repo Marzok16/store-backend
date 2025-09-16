@@ -24,7 +24,8 @@ const instance = axios.create({
     baseURL: BASE_URL,
     headers: {
         'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true'
+        'ngrok-skip-browser-warning': 'true',
+        'User-Agent': 'MyApp/1.0'
     }
 });
 
@@ -33,9 +34,10 @@ instance.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
         
-        // Always add ngrok bypass header for ngrok URLs
+        // Always add ngrok bypass headers for ngrok URLs
         if (BASE_URL.includes('ngrok-free.app')) {
             config.headers['ngrok-skip-browser-warning'] = 'true';
+            config.headers['User-Agent'] = 'MyApp/1.0';
         }
         
         // Don't add token for login, signup, and public endpoints
@@ -57,9 +59,17 @@ instance.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// Add response interceptor for debugging
+// Add response interceptor for debugging and ngrok warning handling
 instance.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        // Check if response is HTML (ngrok warning page)
+        const contentType = response.headers['content-type'] || '';
+        if (contentType.includes('text/html') && response.data && typeof response.data === 'string' && response.data.includes('ngrok')) {
+            console.error('Received ngrok warning page instead of API response');
+            throw new Error('ngrok-warning-page');
+        }
+        return response;
+    },
     (error) => {
         console.error('Server Error:', {
             status: error.response?.status,
